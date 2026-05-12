@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bate Papo</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    #root {
+        width: 100%;
+        height: 100%;
+        background: #232323;
+        display: flex;
+    }
+</style>
+  <div id="root"></div>
+<body>
+<script>
+    async function initFetch() {
+        try {
+            const response = await fetch(`http://localhost:8000/`, {
+                method: 'GET',
+            })
+
+            const page = await response.text()
+
+            const main = document.getElementById('root')
+
+            main.innerHTML = page
+            
+        } catch (error) {
+            console.warn("Erro", error)
+        }
+    }
+
+window.onload = () => {
+    initFetch()
+}
+
+// js da pagina batepapo
+
+
+async function senderMsg() {
+    try {
+      const response = await fetch(`http://localhost:8001/`)
+
+    } catch (error) {
+        console.warn("Erro", error)
+    }
+}
+
+
+
+
+
+//_________________termina aqui.
+</script>
+</body>
+</html>

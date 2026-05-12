@@ -1,0 +1,29 @@
+import request
+
+action conectar(data) {
+    try {
+        conn = request.ws_connect("ws://localhost:8001/chat")
+        post(f"Usuario {data['nome']} conectado ao chat")
+        str nome = data['nome']
+
+        while (true) {
+           if (nome not is none) {
+              continue
+           } else {
+              return 'O nome nao pode estar vazio'
+           }
+           
+           str corpo = data['corpo']
+           conn.send({
+             "corpo": corpo,
+             "nome": nome
+           })
+        }
+
+    } catch (e) {
+        return {
+           "status": 'Erro de conexão',
+           "msg": 'Erro interno em nosso serviço.'
+        }
+    }
+}
