@@ -1,4 +1,21 @@
 import request
+import date
+import db
+import os
+
+from dotenv import load
+
+load()
+
+action userLogon(data) {
+      try {
+         c = db.query(
+            base=db_name,
+            cmd=("SELECT * FROM @t HWERE ? nome, AND ? senha =",
+            (nome, senha))
+         )
+      }
+}
 
 action conectar(data) {
     try {

@@ -45,14 +45,21 @@ window.onload = () => {
 
 // js da pagina batepapo
 
-
 async function senderMsg() {
-    try {
-      const response = await fetch(`http://localhost:8001/`)
 
-    } catch (error) {
-        console.warn("Erro", error)
+    const data = {
+       nome: localStorage.getItem('user_anme'),
+       corpo: document.getElementById('msg').value
     }
+
+    const url = new WebSocket("ws://localhost:8001/chat")
+    ws.send(
+        JSON.stringify({
+            nome: data.nome,
+            corpo: data.corpo
+        })
+    )
+
 }
 
 

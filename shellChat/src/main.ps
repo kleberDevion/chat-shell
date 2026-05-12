@@ -1,7 +1,5 @@
-import date
-import db
-
 from jinker import Jinker, cors, render
+from sw.client import userLogon
 
 app = Jinker(__name__)
 cors(options=["POST", "GET"], permiser=['*/', 'allowed.all/Users-Agent'])
@@ -9,8 +7,34 @@ cors(options=["POST", "GET"], permiser=['*/', 'allowed.all/Users-Agent'])
 @app.socket('/chat', channel=True) {
     action sender() {
         msg = request.get_json()
-        post(f"[{msg.nome}]: {msg.corpo} : {date.time()}")
-        app.channel(forAll=msg) 
+        app.channel(forAll=msg)
+
+        if (app.channel.status == Success) {
+            continue
+        } else {
+            return {
+                "status": "Erro",
+                "msg": "Erro de conexão."
+            }
+        }
+
+        try {
+            if (count str(msg['nome']) in data) {
+                return {
+                   "item_msg": msg,
+                   "obj": "Objetos da msg"
+                }
+            } else {
+                return "Erro no envio"
+            }
+        } catch (e) {
+             post("ERRO NO SERVER: ", e)
+             return {
+                "status": 'Erro',
+                "msg": "Erro no servidor."
+             }
+        }
+        
     }
 }
 
@@ -32,6 +56,13 @@ cors(options=["POST", "GET"], permiser=['*/', 'allowed.all/Users-Agent'])
             return render("batepapo.html")
         }
      }
+}
+
+@app.route('/login', auth=cors.permiser(), methods=cors.options(["POST"])) {
+    action logarUser() {
+        data = request.get_json()
+        return userLogon(data)
+    }
 }
 
 run_selfwith_("main") {
